@@ -1,0 +1,74 @@
+import java.util.Vector;
+
+public class MyThread {
+    int wordCnt;
+    int id;
+    Vector<String> data;
+
+    /**
+    Monitor mon;
+    **/
+
+    MyThread(int wordCnt, Vector<String> data, int id) {
+	this.wordCnt = wordCnt;
+	this.data = data;
+	this.id = id;
+
+	/**
+	this.mon = mon;
+	**/
+    }
+
+    public Vector<String> quickSort(Vector<String> elements) {
+	if (elements.size() <= 1 )
+	    return elements;
+
+	String pivot = elements.get(0);
+	
+	Vector<String> lowerHalf = new Vector<String>();
+	Vector<String> upperHalf = new Vector<String>();
+	
+	for (int i = 0; i < elements.size(); i++) {
+	    if (data.get(i).compareTo(pivot) <= 0)
+		lowerHalf.add(data.get(i));
+
+	    else
+		upperHalf.add(data.get(i));
+	}
+
+	return concatenate(quickSort(lowerHalf), quickSort(upperHalf));
+	
+    }
+
+    private Vector<String> concatenate(Vector<String> lower, Vector<String> upper) {	
+	int size1 = lower.size();
+	int size2 = upper.size();
+	
+	Vector<String> ret = new Vector<String>();
+	
+	for (int i = 0; i < size1; i++) {
+	    ret.add(lower.get(i));
+	}
+
+	for (int j = 0; j < size2; j++) {
+	    ret.add(upper.get(j));
+	}
+
+	return ret;
+    }
+
+    public void run() {
+	Vector<String> data1 = quickSort(data);
+	
+	print();
+	/**
+	mon.addResultPiece(data);
+	**/
+    }
+
+    public void print() {
+	for (int i = 0; i < data.size(); i++) {
+	    System.out.println(data.get(i));
+	}
+    }
+}

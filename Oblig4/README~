@@ -1,0 +1,24 @@
+hei!
+
+Amdalh's Lov:
+Each thread sorts a partition of the array.
+This part is done parallel.
+
+while reading txt file, merging threads, and write to file are done
+serial.
+
+A sketch of totall time will be:
+
+serial:         +     parallel:         +  serial:
+read file             sort elements        merge threads
+give partitions                            print to outfile
+to threads
+
+
+Run time:
+Each thread uses quickSort algorithm. This has run time
+O(nlogn) where n is totall elements.
+
+Since sorting is done parallel. Run time of the parallel
+part will be O(plogp) where p is totall elements of each 
+partitions.  
