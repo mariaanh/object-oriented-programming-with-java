@@ -1,0 +1,10 @@
+class Boks extends A {
+    int id;
+    Rute[][] data;
+    String type = "Boks";
+
+    Boks(int id) {
+	super(id);
+    }
+}
+

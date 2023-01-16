@@ -1,0 +1,128 @@
+abstract class Ruteabstract {
+    private int data;
+    private Rute next;
+
+    public Kolonne myColumn;
+    private Rad myRow;
+    private Boks myBox;
+    private Brett myBoard;
+
+    private boolean fixed = false;
+
+    public boolean setData(int data) {
+	if (!fixed) {
+	    this.data = data;
+	    return true;
+	} else 
+	    return false;
+    }
+
+    public void setFixed() {
+	fixed = true;
+    }
+
+    public Rute getNext() {
+	return next;
+    }
+
+    public int getData() {
+	return data;
+    }
+
+    public boolean isFixed() {
+	return fixed;
+    }
+    
+    public void setMyBoard(Brett b) {
+	this.myBoard = b;
+    }
+
+    public void setRuteNext(Rute newnext) {
+	this.next = newnext;
+    }
+
+    public void setMyColumn(Kolonne c) {
+	this.myColumn = c;
+    }
+
+    public void setMyRow(Rad r) {
+	this.myRow = r;
+    }
+
+    public void setMyBox(Boks b) {
+	this.myBox = b;
+    }
+
+    public boolean validValue(int v) {
+	if (myColumn.validValue(v) == false ||
+	    myBox.validValue(v) == false ||
+	    myRow.validValue(v) == false)
+
+	    return false;
+	
+	return true;
+    }
+
+    public void settTallMegOgResten() {
+	if (!fixed) {
+	    for ( int i = 1; i <= myBoard.dimension; i++) {
+		if (validValue(i)) {
+		    data = i;
+		    if (next == null) {
+			myBoard.saveSolution();
+	
+		    } else {
+			next.settTallMegOgResten();
+		    }
+		    
+		}
+	    }
+	    
+	    data = 0;
+
+	} else {
+	    if (next != null) {
+		next.settTallMegOgResten();
+		
+	    } else {
+		myBoard.saveSolution();
+	    }
+	} 
+    }
+}
+
+class Rute extends Ruteabstract {
+    
+    private int data;
+    private Rute next;
+
+    public Kolonne myColumn;
+    private Rad myRow;
+    private Boks myBox;
+    private Brett myBoard;
+
+    private boolean fixed = false;
+
+    public void Rute(int data) {
+	this.data = data;
+	next = null;
+    }
+}
+
+class Rutefill extends Ruteabstract {
+    
+    private int data;
+    private Rute next;
+
+    public Kolonne myColumn;
+    private Rad myRow;
+    private Boks myBox;
+    private Brett myBoard;
+
+    private boolean fixed = false;
+
+    public void Rute(int data) {
+	this.data = data;
+	next = null;
+    }
+}

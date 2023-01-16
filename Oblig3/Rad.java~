@@ -1,0 +1,9 @@
+class Rad extends A {
+    int id;
+    Rute[][] data;
+    String type = "Rad";
+
+    Rad(int id) {
+	super(id);
+    }
+}

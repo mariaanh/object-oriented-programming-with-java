@@ -1,0 +1,9 @@
+class Kolonne extends A {
+    int id;
+    Rute[][] data;
+    String type = "Kolonne";
+    
+    Kolonne(int id) {
+	super(id);
+    }
+}
