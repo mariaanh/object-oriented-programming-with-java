@@ -1,0 +1,109 @@
+<html>
+<head>
+<link rel='stylesheet' type='text/css' href='src/test/resources/testreportstyle.css'/>
+<link rel='stylesheet' type='text/css' href='testreportstyle.css'/>
+</head>
+<body>
+<h1>Testreport</h1>
+<div class='testresults failedtests'>
+<h3>Failed:</h3>
+<div class='nonemessage'>None</div></div>
+<div class='testresults skippedtests'>
+<h3>Skipped:</h3>
+<div class='nonemessage'>None</div></div>
+<div class='testresults passedtests'>
+<h3>Passed:</h3>
+<ul>
+	<li class='testresult even'>
+		<span class='testname'>addContainsSize</span>
+		<span class='testgroups'>(groups="collection-core")</span>
+		<div class='testdescription'>Tests add(), contains() and size() methods.</div>
+	</li>
+	<li class='testresult odd'>
+		<span class='testname'>addNull</span>
+		<span class='testgroups'>(groups="collection-core")</span>
+		<div class='testdescription'>Test if add() throws NullPointerException as documented.</div>
+	</li>
+	<li class='testresult even'>
+		<span class='testname'>clear</span>
+		<div class='testdescription'>Tests if clear() removes all elements from the collection.</div>
+	</li>
+	<li class='testresult odd'>
+		<span class='testname'>containsNull</span>
+		<span class='testgroups'>(groups="collection-core")</span>
+		<div class='testdescription'>Test if contains() throws NullPointerException as documented.</div>
+	</li>
+	<li class='testresult even'>
+		<span class='testname'>get</span>
+		<div class='testdescription'>Tests if the get(int index) method works as specified in the interface on sorted collections.</div>
+	</li>
+	<li class='testresult odd'>
+		<span class='testname'>getOutOfBounds</span>
+		<div class='testdescription'>Test if get(int index) throws IndexOutOfBoundsException as documented.</div>
+	</li>
+	<li class='testresult even'>
+		<span class='testname'>isEmpty</span>
+		<div class='testdescription'>Tests if the isEmpty() method works as specified in the interface.</div>
+	</li>
+	<li class='testresult odd'>
+		<span class='testname'>iteratorNextNull</span>
+		<div class='testdescription'>Tests if calling next() on a iterator with no more items throws NoSuchElementException.</div>
+	</li>
+	<li class='testresult even'>
+		<span class='testname'>iteratorNotWreckingList</span>
+		<div class='testdescription'>Tests that the iterator does not wreck the list.</div>
+	</li>
+	<li class='testresult odd'>
+		<span class='testname'>iteratorOrder</span>
+		<div class='testdescription'>Tests if the iterator yields all the elements inserted in the collection in sorted order with smallest item first.</div>
+	</li>
+	<li class='testresult even'>
+		<span class='testname'>iteratorRemoveAll</span>
+		<div class='testdescription'>Tests if removal of all the elements in an iterator works.</div>
+	</li>
+	<li class='testresult odd'>
+		<span class='testname'>iteratorRemoveFirst</span>
+		<div class='testdescription'>Tests if removing the first item in the iterator decreases the size of the collection by one and removes the item from the collection.</div>
+	</li>
+	<li class='testresult even'>
+		<span class='testname'>iteratorRemoveLast</span>
+		<div class='testdescription'>Tests if removing the last item in the iterator decreases the size of the collection by one and removes the item from the collection.</div>
+	</li>
+	<li class='testresult odd'>
+		<span class='testname'>iteratorRemoveMiddle</span>
+		<div class='testdescription'>Tests if removing an item from the middle of the iterator decreases the size of the collection by one and removes the item from the collection.</div>
+	</li>
+	<li class='testresult even'>
+		<span class='testname'>iteratorRemoveWithoutNext</span>
+		<div class='testdescription'>Tests if calling remove() on a iterator without first calling next() throws IllegalStateException.</div>
+	</li>
+	<li class='testresult odd'>
+		<span class='testname'>iteratorTestOneElement</span>
+		<div class='testdescription'>Tests if calling next() on a iterator with only one element returns correct value.</div>
+	</li>
+	<li class='testresult even'>
+		<span class='testname'>iteratorTestRemoveBeforeNext</span>
+		<div class='testdescription'>Tests if calling remove before calling next on an iterator throws IllegalStateException.</div>
+	</li>
+	<li class='testresult odd'>
+		<span class='testname'>iteratorTestRemoveCallTwice</span>
+		<div class='testdescription'>Tests if calling remove twice on an iterator throws IllegalStateException.</div>
+	</li>
+	<li class='testresult even'>
+		<span class='testname'>iteratorTestRemoveSubsequent</span>
+		<div class='testdescription'>Tests if calling remove on two subsequent elements on an iterator removes the correct element.</div>
+	</li>
+	<li class='testresult odd'>
+		<span class='testname'>remove</span>
+		<div class='testdescription'>Tests if the remove() method works as specified in the interface.</div>
+	</li>
+	<li class='testresult even'>
+		<span class='testname'>removeNull</span>
+		<div class='testdescription'>Test if remove() throws NullPointerException as documented.</div>
+	</li>
+	<li class='testresult odd'>
+		<span class='testname'>toArray</span>
+		<div class='testdescription'>Tests if method toArray yields all the elements inserted in the collection in sorted order with smallest item first.</div>
+	</li>
+</ul></div>
+</body></html>

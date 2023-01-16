@@ -1,0 +1,32 @@
+package inf1010.assignment;
+
+
+
+public class Professor extends Person implements Teacher {
+    Subject subject;
+    
+    public Professor(String name, 
+		     String email,
+		     String username) {
+	super(name,email,username);
+    }
+
+    /**
+     * Returns an array of students
+     * of the subject.
+     */
+    public Student[] getStudents() {
+	if (this.subject == null) 
+	    return new Student[0];
+
+	return this.subject.getStudents();	
+    }
+
+    /**
+     * Returns the subject this professor
+     * is teaching
+     */
+    public Subject getSubject() {
+	return subject;
+    }
+}

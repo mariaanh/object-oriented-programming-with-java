@@ -1,0 +1,353 @@
+package inf1010.assignment;
+
+import inf1010.lib.two.IfiCollection;
+import inf1010.lib.two.ShellBase;
+import java.util.Iterator;
+import java.util.Arrays;
+import java.util.NoSuchElementException;
+
+public class Shell extends ShellBase {
+	
+    public static void main(String[] args) { 
+       
+
+	Shell s = new Shell();
+	s.createTestDatabase();
+	s.inputLoop();
+    }
+
+    IfiCollection<Person> people;
+    IfiCollection<Subject> subjects;	
+      
+    public Shell() {
+	people = new OrderedSet<Person>();
+	subjects = new OrderedSet<Subject>();
+    }
+
+    protected void addGroup(String subject, 
+			    String teachingAssistant) { 
+	for (Person p : people) { 
+	    if (teachingAssistant.equals(p.username)) {
+		for (Subject s : subjects) {
+		    if (subject.equals(s.courseCode)) {
+			Subject enrollSubject = s;
+			
+			if (!(p instanceof TeachingAssistant)) {
+			    System.out.println("Parameter input name:  "
+					       + teachingAssistant + 
+					       " was not initiated with type TeachingAssistant");
+			    return;
+			}
+
+			TeachingAssistant assistant = (TeachingAssistant)p;
+			Group g = new Group(enrollSubject, 
+					    assistant);
+			
+			assistant.initiateGroup(g);
+			
+		       
+			if (enrollSubject.addGroup(g)) { 
+			    System.out.println("Group with courseCode " + 
+					       subject +
+					       " and teaching assistant " +
+					       teachingAssistant +
+					       " is successfully added");
+			    return;
+			}
+			
+			System.out.println("Group with name " +
+					   subject +
+					   " and teaching assistant " +
+					   teachingAssistant + 
+					   " is already in IfiCollection groups");
+			return;
+		    }
+		}
+		
+		System.out.println("Subject with name " + subject
+				   + " does not exists");
+		return;
+	    }	    
+	}
+
+	System.out.println("Teaching assistant with name" + teachingAssistant
+			   + " does not exists");
+	return;
+    }
+    
+    protected void addProfessor(String name, 
+				String username,
+				String email) {
+	if (name == null || username == null || email == null) {
+	    System.out.println("addProfessor: One of the parameter can not be null");
+	    return;
+	}
+     	
+	Person professor = new Professor(name,
+					 email,
+					 username);
+	if (people.add(professor)) {
+	    System.out.println("Professor " + name
+			       +" sucessfully added");
+	    return;
+	}
+
+	if (!people.add(professor)) {
+	    System.out.println("Professor with name "
+			       + name +
+			       " is already in the list");
+	}
+    }
+    
+    protected void addStudent(String name, 
+			      String username,
+			      String email) {
+
+	Person student = new Student(name, 
+				     email,
+				     username);
+	if(people.add(student)) {
+	    System.out.println("Student with name "
+			       + name +
+			       " is successfully added");
+	    return;
+	}
+	
+	System.out.println("Student with name "
+			   + name +
+			   " is already in the list");
+	return;
+    }
+    
+    protected void addSubject(String courseCode,
+			      String professor) {
+	for (Person p : people) {
+	    if (professor.equals(p.username)) {
+		if (!(p instanceof Professor)) {
+		    System.out.println("Name: " +
+				       professor +
+				       " was not initiated with type Professor.");
+		    System.out.println("addSubject with courseCode: " + 
+				       courseCode + " is unsuccessful");
+		    return;
+		}
+
+		Professor pf = (Professor)p;
+	
+
+		Subject subject = new Subject(courseCode,
+					      pf);
+		if (subjects.add(subject)) {
+		    System.out.println("successful added");
+		    return;
+		}
+		
+		System.out.println("Subject: " + courseCode
+				   + " is already added");
+		return;
+	    }
+	}
+
+	System.out.println("Name: " + professor + 
+			   " is not in the list");
+    }
+    
+    protected void addTeachingAssistant(String name,
+					String username,
+					String email) {
+	
+	Person assistant = new TeachingAssistant(name,
+						 email,
+						 username);
+       
+	if (people.add(assistant)) {
+	    System.out.println("Name: " + name + 
+			       " is sucessfully created as a teaching assistant" + 
+			       " and successfully added");
+	    return;
+	}
+
+	System.out.print("Name: " + assistant.username);
+	System.out.print(" is already in the list \n");
+    }
+    
+    protected void enrollStudent(String student, 
+				 String subject,
+				 int group) {
+	for (Subject s : subjects) {
+	    if (subject.equals(s.courseCode)) {
+		for (Person p : people) {
+		    if (student.equals(p.username)) {
+			if (!(p instanceof Student)) {
+			    System.out.println("Name: " +
+					       student +
+					       " is not initialized with type Student");
+			    return;
+			}
+			
+			Student std = (Student)p;
+			
+			if (group > s.groupsSize()) {
+			    System.out.println("Group number: " + group +
+					       " does not exists");
+			    System.out.println("Enroll student: " + student +
+					       " is therefore unsuccessful");
+			    return;
+			}
+
+			if (s.enrollStudent(std, group)) {
+			    System.out.println("Name: " + student +
+					       " is enrolled in " +
+					       subject + "with group number: "
+					       + group);
+			    return;
+			}
+
+			System.out.println("Name: " + student +
+					   " is already enrolled in this subject");
+			return;
+		    }
+		}
+
+		System.out.println("Name: " + student + "is not in the list");
+
+	    }    
+	}
+	
+	System.out.println("Name: " + subject + " is not in the list");
+    }
+    
+    protected void showPerson(String name) {
+	
+	for (Person p : people) { 
+	    if (name.equals(p.name)) {
+		Person person = p;	    
+			
+		if (person instanceof Professor) {
+		    Professor pf = (Professor)person;
+		    Student[] students;
+		    
+		    students = pf.getStudents();
+		    
+		    System.out.println("Professor");
+		    
+		    System.out.print("Name: " + pf.name + "\n" + 
+				     "Email: " + pf.email + "\n" +
+				     "UserName: " + pf.username + "\n");
+		    
+		    if (pf.getSubject() != null)
+			System.out.println("Teach: " +
+					   pf.getSubject().courseCode);
+		    
+		    System.out.println("Teach these students:");
+
+		    if (pf.getStudents() == null) {
+			System.out.println("students of professor " + 
+					   "is not initialized");
+			return;
+		    }
+		    
+		    for (Student s : students)
+			System.out.println(s.name);
+		    
+		} else if (person instanceof TeachingAssistant) {
+		    TeachingAssistant assistant = (TeachingAssistant)person;
+		    Subject tSubject = assistant.getSubject();
+		    Student[] students = assistant.getStudents();
+		    Group[] groups = assistant.getGroups();
+		    
+		    System.out.print("Name: " + assistant.name + "\n" + 
+				     "Email: " + assistant.email + "\n" +
+				     "UserName: " + assistant.username + "\n");
+		    
+		    System.out.print("Teaching Assistant of: \n" + 
+				     "Group number: " + assistant.getGroup().number + "\n" +
+				     "Subject: " + tSubject.courseCode + "\n");
+		    
+		    System.out.println("Teach these students:");
+		    
+		    for (Student s : students)
+			System.out.println(s.name);
+		    
+		    System.out.println("Enrolled in these groups:");
+		    
+		    for (Group g : groups) {
+			System.out.println("Course Code: " + g.subject.courseCode);
+			System.out.println("Lectuer: " + g.subject.lecturer);
+			System.out.println("Teaching assistant: " + 
+					   g.getTeachingAssistant().name);
+		    }
+		    
+		} else if (person instanceof Student) {
+		    Student student = (Student)person;
+		    Group[] groups = student.getGroups();
+		    
+		    System.out.print("Name: " + student.name + "\n" + 
+				     "Email: " + student.email + "\n" +
+				     "UserName: " + student.username + "\n");
+		    
+		    System.out.println("Enrolled in these groups:");
+		    
+		    for (Group g : groups) {
+			System.out.println("Course Code: " + g.subject.courseCode);
+			System.out.println("Lectuer: " + g.subject.lecturer);
+			System.out.println("Teaching assistant: " + 
+					   g.getTeachingAssistant().name);
+			
+		    }
+		    
+		} else {
+		    System.out.println("This person is only a person");
+		
+		    System.out.print("Name: " + person.name + "\n" + 
+				     "Email: " + person.email + "\n" +
+				     "UserName: " + person.username + "\n");		
+		}
+	    }
+	}
+
+	System.out.println("Name: " + name + "does not exists");
+    }
+
+    protected void showSubject(String name) {
+	for (Subject s : subjects) {
+	    if (name.equals(s.courseCode)) {
+		Subject subject = s;
+		System.out.println("Course code: " + subject.courseCode);
+		System.out.println("Contains this groups:");
+		
+		for (Group g : subject.getGroups()) {
+		    System.out.println("Group number: " + g.number);
+		    System.out.println("Contains these students: ");
+		    for (Student std : g.getStudents()) {
+			System.out.println("Name: " + std.name);
+		    }
+		}
+	    }
+	   
+	    System.out.println("The subject has not been added");
+	}
+    }
+
+    protected void list() {
+	if (people == null) {
+	    System.out.println("no person has been added");
+	} else {
+	    System.out.println("List of people: ");
+	    
+	    for (Person p : people)
+		System.out.println(p.name);
+	}
+	
+	if (subjects == null) {
+	    System.out.println("no subject has been added");
+	    
+	} else {
+	    System.out.println();
+	    System.out.println("List of subject: ");
+	    
+	    for (Subject s : subjects) 
+		System.out.println(s.courseCode);
+	}
+    }
+}

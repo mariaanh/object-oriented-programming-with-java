@@ -1,0 +1,168 @@
+package inf1010.assignment;
+
+import inf1010.lib.two.IfiCollection;
+import java.util.NoSuchElementException;
+
+public class Subject implements Comparable<Subject> {
+    String courseCode;
+    Professor lecturer;
+
+    /** Make an empty linked list */
+    IfiCollection<Group> groups = new OrderedSet<Group>();
+
+    /** This is to assign a number to each adding group */
+    int groupNumber = 0;
+
+    public Subject(String courseCode, Professor lecturer) {
+	this.courseCode = courseCode;
+	this.lecturer = lecturer;
+    }
+
+    /** 
+     * @returns int size of groups.
+     */
+    public int groupsSize() {
+	return groups.size();
+    }
+
+    /** Add a group to groups. Assign a group number of
+     * when adding. The first adding group gets group 
+     * number 1, the next group get last element_group_number
+     * +1;
+     * 
+     * @param g group
+     *
+     * @returns {@code true} if successful, otherwise
+     * {@code false} 
+     *
+     * @throws NullPointerException if g is null.
+     */
+    public boolean addGroup(Group g) {
+	if (g == null) {
+	    throw new NullPointerException();
+	}
+	
+	this.groupNumber += 1;
+	g.number = groupNumber;
+    
+	if (groups.add(g))
+	    return true;
+
+	return false;
+    }
+
+    /**
+     * @returns an array of groups
+     */
+    public Group[] getGroups() {
+	Group[] g = new Group[1];
+	return groups.toArray(g);
+    }
+    
+    /**
+     * compare according to it's
+     * courseCode.
+     */
+    public int compareTo(Subject other) {
+	return this.courseCode.compareTo(other.courseCode);
+    }
+    
+    /**
+     * Inserting a student
+     * @param s student, group groups's number
+     *
+     * @returns {@code true} is succesful, otherwise
+     * {@code false}
+     *
+     * @throws NullPointerException if s is null. 
+     * @throws NoSuchElementException if group's number
+     * does not exists.
+     */
+    public boolean enrollStudent(Student s, int group) {
+	if (s == null) {
+	    throw new NullPointerException();
+	}
+
+	for (Group g : groups) {
+	    if (g.number == group) {
+		g.addStudent(s);
+		return true;
+	    }
+	}
+	
+	if (group > groups.size())
+	    throw new NoSuchElementException();
+	
+	return false;
+    }
+
+    /**
+     *  @returns the courseCode.
+     */
+    public String getCourseCode() {
+	return this.courseCode;
+    }
+
+    /**
+     * @returns the lecturer.
+     */
+    public Teacher getLecturer() {
+	Teacher teacher = this.lecturer;
+	return teacher;
+    }
+    
+    /**
+     * @returns the totall number of
+     * students. Assume that a student
+     * can not be in more than one
+     * group.
+     */
+    public int getStudentBodySize() {
+	int totallStudents = 0;
+	
+	for (Group g : groups) {
+	    totallStudents += g.getStudentBodySize();
+	}
+	
+	return totallStudents;
+    }
+
+    /**
+     * @return an array of Students
+     * in this subject.
+     */   
+    public Student[] getStudents() {
+	int size = this.getStudentBodySize();
+	Student[] students = new Student[size];
+	
+	for (Group g : groups) {
+	    for (Student s : g.getStudents()) {
+		for (int i = 0; i < size; i++) {
+		    students[i] = s;
+		}
+	    }
+	}
+	return students;
+    }
+
+    /**
+     * @returns number an array of teachers
+     */
+    public Teacher[] getTeachers() {
+	Teacher teacher;
+	int groupsSize = groups.size();
+	Teacher[] teachers = new Teacher[groupsSize];
+	
+	teacher = this.lecturer;
+	teachers[0] = teacher;
+
+	for (Group g : groups) {
+	    for (int i = 1; i < groupsSize; i++) {
+		teacher = g.teachingAssistant;
+		teachers[i] = teacher;
+	    }
+	}
+
+	return teachers;
+    }
+}

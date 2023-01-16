@@ -1,0 +1,36 @@
+package inf1010.assignment;
+
+
+class TeachingAssistant extends Student implements Teacher {
+    Group group;
+
+    public TeachingAssistant(String name, 
+			     String email,
+			     String username) {
+	super(name,email,username);
+    }
+
+    /** initialise variable group */    
+    public void initiateGroup(Group group) {
+	this.group = group;
+    }
+
+    /** @returns this.group */
+    public Group getGroup() {
+	return this.group;
+    }
+    
+    /** @returns an array of students
+     * in the group.
+     */
+    public Student[] getStudents() {
+	return this.group.getStudents();
+    }
+
+    /**
+     * @returns the subject of the group
+     */
+    public Subject getSubject() {
+	return group.getSubject();
+    }
+}

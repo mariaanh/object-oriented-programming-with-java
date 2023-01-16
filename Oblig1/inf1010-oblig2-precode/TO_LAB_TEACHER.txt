@@ -1,0 +1,20 @@
+Hi!
+
+Alle metoder som returnere en array, hvis det er ingen elementer for legge i arrayen
+returnere det en tom array. altså en new array[0]. 
+
+Basert på createTestDataBase er det ikke gitt groupNumber som parameter ved addGroup.
+Jeg har derfor valgt å assign et nummer når gruppen legges i IfiCollection. Den første
+gruppen får groupNumber 1, og neste får 2 også videre.
+
+Metoden addTeachingAssistant i shell.java. Lages en ny teaching assistant også legges
+denne personen i gruppen people. Hvis brukernavnet allerede finnes i listen som med
+instance Person lages det en instance TeachingAssistant av det spesifiserte username
+og personen legges i gruppen.
+
+Ellers fungerer programmet fint.
+
+
+
+
+   
